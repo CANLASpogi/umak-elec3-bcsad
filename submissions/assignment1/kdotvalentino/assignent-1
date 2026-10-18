@@ -1,0 +1,15 @@
+ANSWER_1: The Course Materials Portal cannot read `/etc/course-portal/portal.conf` because the file access was denied due to its permissions.
+
+ANSWER_2: The file is owned by root and has permissions `600` (`rw-------`). The owner has read and write access, while the group and others have no access. Since `course-portal` is not the owner but belongs to the `course-portal` group, it cannot read the file.
+
+ANSWER_3: 640
+
+ANSWER_3_WHY: `400` does not give the group read access. `755` grants unnecessary execute permissions and access to others. `777` grants everyone read, write, and execute access, which is excessive. `640` allows the owner to read and write and the group to read.
+
+ANSWER_4_ORDER: B, G, E, D, F, A, I, C, H
+
+ANSWER_5: Using `chmod 777` allows everyone to modify the configuration file, which could lead to unauthorized changes and security risks.
+
+ANSWER_6: A successful application health check and a test confirming that users can access the Course Materials Portal without the configuration error.
+
+ANSWER_7_BRIDGE: component=server configuration, detect=monitoring, recover=automated recovery, proof=health checks
