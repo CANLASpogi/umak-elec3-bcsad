@@ -2,9 +2,10 @@
 
 ## About me
 
-- GitHub username: marionnn10
+- GitHub username: `marionnn10`
 - IAM user name that I signed in with: Lab group IAM user
-- AWS Region: Singapore (ap-southeast-1)
+- AWS Region: Singapore (`ap-southeast-1`)
+- X: 117
 
 ---
 
@@ -16,29 +17,13 @@ Default VPC IPv4 CIDR:
 
 `172.31.0.0/16`
 
-Number of addresses in that CIDR:
+Number of IPv4 addresses in that CIDR:
 
 65,536
 
-VPC ID:
-
-`vpc-02b29f02cd658307`
-
-State:
-
-Available
-
-Tenancy:
-
-Default
-
-Owner ID:
-
-`548387266019`
-
 ---
 
-## A2. The Subnets
+## A2. The subnets
 
 The default VPC contains three default subnets.
 
@@ -48,254 +33,154 @@ The default VPC contains three default subnets.
 | `ap-southeast-1b` | `172.31.16.0/20` |
 | `ap-southeast-1c` | `172.31.0.0/20` |
 
-Subnet IDs:
+---
 
-| Subnet ID | Availability Zone |
-|---|---|
-| `subnet-00a19af925fdd4d` | ap-southeast-1a |
-| `subnet-03a5209dd3590f3f5` | ap-southeast-1b |
-| `subnet-09c3dc46f64c311d1` | ap-southeast-1c |
+## A3. Available IPv4 addresses
+
+| Subnet CIDR | Available IPv4 addresses |
+|---|---:|
+| `172.31.32.0/20` | 4,090 |
+| `172.31.16.0/20` | 4,091 |
+| `172.31.0.0/20` | 4,091 |
+
+Each `/20` subnet contains 4,096 IPv4 addresses. AWS reserves five addresses in every subnet, so an otherwise unused subnet has 4,091 available addresses.
+
+The `172.31.32.0/20` subnet has 4,090 available addresses, one fewer than the other two. This means one additional address is allocated to a resource or network interface in that subnet. The screenshot does not identify the exact resource; check the EC2 instance's subnet/network interface in the AWS console before naming it specifically.
 
 ---
 
-## A3. Available IPv4 Addresses
+## A4. The route table
 
-A `/20` subnet contains 4,096 IPv4 addresses.
-
-AWS reserves 5 IP addresses in every subnet.
-
-Therefore:
-
-4,096 - 5 = 4,091 available IPv4 addresses.
-
-The number can become lower when AWS resources use addresses inside the subnet.
-
----
-
-## A4. The Route Table
-
-Route Table ID:
-
-`rtb-037b142ea7ed8c1c9`
-
-VPC:
-
-`vpc-02b29f02cd658307`
-
-Routes:
+Routes in the default VPC route table:
 
 | Destination | Target |
 |---|---|
 | `172.31.0.0/16` | `local` |
-| `0.0.0.0/0` | `igw-0943e7e688293168` |
+| `0.0.0.0/0` | `igw-0943e7e688293168` (Internet Gateway) |
 
-The local route allows communication between resources inside the VPC.
-
-The `0.0.0.0/0` route sends Internet traffic to the Internet Gateway.
+The local route allows resources in the VPC to communicate with each other. The `0.0.0.0/0` route sends traffic for destinations outside the VPC to the Internet Gateway.
 
 ---
 
-## A5. Public or Private Subnets
+## A5. Public or private subnets
 
-Are the default subnets public or private?
-
-The default subnets are public.
-
-Which route proves it?
-
-The route:
-
-```
-0.0.0.0/0 → igw-0943e7e688293168
-```
-
-proves that the subnets have a route to the Internet Gateway.
+The default subnets are public because their route table includes `0.0.0.0/0` pointing to the Internet Gateway.
 
 ---
 
 ## A6. The Internet Gateway
 
-Internet Gateway ID:
+State of the Internet Gateway: **Attached**.
 
-`igw-0943e7e688293168`
-
-State:
-
-Attached
-
-Attached VPC:
-
-`vpc-02b29f02cd658307`
-
-What happens if the Internet Gateway is detached?
-
-The default subnets lose their route to the Internet.
-
-However, resources can still communicate inside the VPC because the local route remains available.
+If the Internet Gateway is detached, the default subnets lose their path to the internet through the `0.0.0.0/0` route. Resources can still communicate inside the VPC because the local route remains.
 
 ---
 
-## A7. NAT Gateways
+## A7. NAT gateways
 
-Number of NAT gateways:
+Number of NAT gateways: **0**.
 
-0
-
-Can a server in a new private subnet download updates? Why?
-
-No.
-
-A private subnet cannot access the Internet without a NAT Gateway.
-
-The private subnet needs a route:
-
-```
-0.0.0.0/0 → NAT Gateway
-```
-
-to allow outbound Internet access while preventing direct inbound Internet access.
+A server in a new private subnet cannot download updates from the internet using the current setup because there is no NAT Gateway. For outbound internet access, the private subnet would need a route such as `0.0.0.0/0` pointing to a NAT Gateway.
 
 ---
 
-## A8. The Network ACL
+## A8. The network ACL
 
-Network ACL ID:
+Inbound rules:
 
-`acl-05e0f593c4c567477`
-
-Associated VPC:
-
-`vpc-02b29f02cd658307`
-
-Default:
-
-Yes
-
-Inbound Rules:
-
-| Rule Number | Type | Source | Allow/Deny |
+| Rule number | Type | Source | Allow/Deny |
 |---|---|---|---|
 | 100 | All traffic | `0.0.0.0/0` | Allow |
-| * | All traffic | `0.0.0.0/0` | Deny |
+| `*` | All traffic | `0.0.0.0/0` | Deny |
 
-How is a Network ACL different from a Security Group?
-
-A Network ACL protects a whole subnet, while a Security Group protects individual resources such as EC2 instances.
-
-A Network ACL is stateless, meaning inbound and outbound rules are evaluated separately.
-
-A Security Group is stateful, meaning return traffic is automatically allowed.
-
-A Network ACL can deny traffic, while Security Groups only allow traffic.
+A Network ACL applies to a subnet and is stateless, so inbound and outbound traffic are evaluated separately. A Security Group applies to network interfaces/resources and is stateful, so return traffic is automatically allowed. Network ACLs can allow or deny traffic, while Security Groups contain allow rules.
 
 ---
 
-## A9. The Default Security Group
+## A9. The default security group
 
-Security Group:
+Inbound rule: **All traffic from the same default Security Group**.
 
-`default`
-
-VPC:
-
-`vpc-02b29f02cd658307`
-
-Inbound rule:
-
-All traffic from the same security group.
-
-Which resources can send traffic to an instance that uses it?
-
-Only resources that also use the same default security group can send inbound traffic.
+Only resources that use that same Security Group can send inbound traffic allowed by this rule. Other sources are not allowed by this inbound rule.
 
 ---
 
 # Part B. Prepare
 
-## B1. Plan Two Subnets
+## B1. Plan two subnets
+
+My value is:
+
+`X = 100 + 17 = 117`
 
 VPC CIDR:
 
-`10.0.0.0/16`
+`10.117.0.0/16`
 
-Public subnet CIDR:
+Public subnet CIDR (the first `/24` in the VPC range):
 
-`10.0.1.0/24`
+`10.117.0.0/24`
 
-Private subnet CIDR:
+Private subnet CIDR (the next `/24` after the public subnet):
 
-`10.0.2.0/24`
+`10.117.1.0/24`
 
 ---
 
-## B2. Route Tables
+## B2. Route tables
 
-Public subnet route table:
+### Public subnet route table
 
 | Destination | Target |
 |---|---|
-| `10.0.0.0/16` | `local` |
+| `10.117.0.0/16` | `local` |
 | `0.0.0.0/0` | Internet Gateway |
 
-Private subnet route table:
+### Private subnet route table
 
 | Destination | Target |
 |---|---|
-| `10.0.0.0/16` | `local` |
+| `10.117.0.0/16` | `local` |
+
+The public subnet has a default route to the Internet Gateway. The private subnet has only the local route and no direct default route to the Internet Gateway or NAT Gateway.
 
 ---
 
-## B3. My VPC Diagram
+## B3. My VPC diagram
 
-Tool used:
+Tool used: **Excalidraw**.
 
-Excalidraw
+![B3: My VPC diagram](vpc-diagram.png)
 
-![B3: My VPC Diagram](vpc-diagram.png)
-
----
-
-## B4. Predict a Change
-
-Can you still open the web page from your laptop? Why?
-
-Yes.
-
-The public subnet has a route:
-
-```
-0.0.0.0/0 → Internet Gateway
-```
-
-which allows Internet communication.
-
-Can the instance still reach another instance in the VPC? Why?
-
-Yes.
-
-The local route allows communication between resources inside the VPC.
+The diagram shows the VPC CIDR, both subnet CIDRs, the Internet Gateway connected to the public subnet, and the route table for each subnet.
 
 ---
 
-## B5. Place a Database
+## B4. Predict a change
 
-Which subnet gets the database? Why?
+**Can you still open the web page from your laptop? Why?**
 
-The database should be placed in the private subnet:
+No. If the `0.0.0.0/0` route is deleted from the default route table, the instance no longer has a route through the Internet Gateway for internet-bound traffic. Having a public IPv4 address alone does not provide a working route to the internet.
 
-`10.0.2.0/24`
+**Can the instance still reach another instance in the same VPC? Why?**
 
-The private subnet does not have a route to the Internet Gateway, preventing direct Internet access.
+Yes. The local route for `172.31.0.0/16` remains in the default VPC route table, so instances in that VPC can still communicate if their Security Group and Network ACL rules allow the traffic.
 
 ---
 
-## B6. My Question About VPCs
+## B5. Place a database
 
-What is your question, and what made you think of it?
+The database should be placed in the private subnet, `10.117.1.0/24`. Its route table has no direct route to the Internet Gateway, so the database is not directly exposed to the internet.
+
+---
+
+## B6. My question about VPCs
+
+**What is your question, and what made you think of it?**
 
 Can two VPCs in the same AWS account communicate with each other securely?
 
-I thought of this because multiple VPCs can exist inside one AWS account, and some applications may require communication between separate networks.
+I thought of this because multiple VPCs can exist in one AWS account, and some applications may need to communicate across separate networks.
 
 ---
 
@@ -305,11 +190,9 @@ I thought of this because multiple VPCs can exist inside one AWS account, and so
 
 ![Screenshot 1 - Subnets](screenshot-1-subnets.png)
 
-
 ## Screenshot 2: Routes
 
 ![Screenshot 2 - Routes](screenshot-2-routes.png)
-
 
 ## Screenshot 3: Network ACL
 
