@@ -1,12 +1,11 @@
 ## Activity
 
 Activity ID (e.g. `seatwork-1`, `lab-1`): `assignment-1`
-Brief used (Lab Activity 1 only): N/A
 
 ## Screenshots
 
-No terminal work is required for this activity — see the checker output
-below instead.
+<img width="1081" height="633" alt="image" src="https://github.com/user-attachments/assets/a01c35d3-0d87-4d8d-8841-8de22f20972b" />
+
 
 ## Evidence
 
@@ -42,5 +41,5 @@ answers are placeholder text for formatting purposes — paste your own real
 
 ## Checklist
 
-- [x] All group members (if applicable) worked on this submission.
-- [x] This only adds files inside our own folder under `submissions/`.
+- [X] All group members (if applicable) worked on this submission.
+- [X] This only adds files inside our own folder under `submissions/`.
