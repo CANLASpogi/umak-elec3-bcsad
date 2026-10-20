@@ -17,11 +17,16 @@ Paste your `check.sh` output showing `PASS`:
 
 -- Part A: all answers present --
 PASS — ANSWER_1 answered.
-...
+PASS — ANSWER_2 answered.
+PASS — ANSWER_3 answered.
+PASS — ANSWER_3_WHY answered.
+PASS — ANSWER_4_ORDER answered.
+PASS — ANSWER_5 answered.
+PASS — ANSWER_6 answered.
 PASS — ANSWER_7_BRIDGE answered.
 
 -- Part B: objective answers are correct --
-PASS — ANSWER_3 is [correct].
+PASS — ANSWER_3 is correct.
 PASS — ANSWER_4_ORDER is correct.
 PASS — ANSWER_5 names a concrete risk of chmod 777.
 
