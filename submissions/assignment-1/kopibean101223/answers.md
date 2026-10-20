@@ -1,6 +1,6 @@
 ANSWER_1: The Course Materials Portal cannot read /etc/course-portal/portal.conf because it does not have permission to access the file.
 
-ANSWER_2: The file has permission 600, so only the owner can read and write it. The course-portal group has no access to the file.
+ANSWER_2: The file has permission 600 (-rw-------) where the owner (root) has read and write, the group (course-portal) has no permissions (---), and others have no permissions (---). Because the course-portal user is a member of the group and group permissions deny read access, the user cannot read the file.
 
 ANSWER_3: 640
 
@@ -12,4 +12,4 @@ ANSWER_5: chmod 777 gives everyone full access, which can cause security problem
 
 ANSWER_6: If the portal works again without the permission denied error, it shows that the problem was fixed.
 
-ANSWER_7_BRIDGE: Component = file permissions, Detect = logs and monitoring, Recover = fixing the permissions, Proof = successful access to the portal.
+ANSWER_7_BRIDGE: Component = configuration and file permissions, detect=log monitoring, recover=minimal permission fix, proof=successful access
