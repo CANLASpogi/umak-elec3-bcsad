@@ -1,8 +1,8 @@
-ANSWER_1: (Example) One sentence stating the failure, based on the error line in the log.
-ANSWER_2: (Example) An explanation naming owner, group, and others permissions. This sample text is not the actual answer.
-ANSWER_3: 755
-ANSWER_3_WHY: (Example) An explanation of why the other three options are not the best fit. This sample choice is not necessarily correct — work out your own answer from the reference tables.
-ANSWER_4_ORDER: A, B, C, D, E, F, G, H, I
-ANSWER_5: (Example) A named risk of over-broad permissions. This sample text is not the actual answer.
-ANSWER_6: (Example) A description of a check that confirms the service itself works, not just that a command exited cleanly.
-ANSWER_7_BRIDGE: component=<name a component>, detect=<describe detection>, recover=<describe recovery>, proof=<describe proof>
+ANSWER_1: The Course Materials Portal failed to read its config file, portal.conf, because permission was denied.
+ANSWER_2: The file's permissions are 600, so only the owner (root) has read and write access, while the course-portal group has no access and others also have no access.
+ANSWER_3: 640
+ANSWER_3_WHY: 400 is wrong because it removes the owner's write permission and still gives the group no access. 755 is wrong because it gives the group and others unnecessary execute permission. 777 is wrong because it gives everyone full access, risking unauthorized changes.
+ANSWER_4_ORDER: B, G, E, D, F, A, I, C, H
+ANSWER_5: A concrete risk of chmod 777 is that any user can modify or replace the file, which can allow unauthorized changes or malicious code.
+ANSWER_6: Confirm that the service is actually working by testing its function—for example, access the website or connect to the service and verify it responds correctly, not just that the start command completed successfully.
+ANSWER_7_BRIDGE: component=permissions, detect=read the error log for "Permission denied", recover=fix the ownership or permissions with chown or chmod, proof=verify the service starts successfully and works as expected.

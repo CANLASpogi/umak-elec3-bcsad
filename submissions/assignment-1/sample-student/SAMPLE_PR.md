@@ -4,8 +4,8 @@ Activity ID (e.g. `seatwork-1`, `lab-1`): `assignment-1`
 
 ## Screenshots
 
-No terminal work is required for this activity — see the checker output
-below instead.
+<img width="1081" height="633" alt="image" src="https://github.com/user-attachments/assets/a01c35d3-0d87-4d8d-8841-8de22f20972b" />
+
 
 ## Evidence
 
@@ -16,11 +16,16 @@ Paste your `check.sh` output showing `PASS`:
 
 -- Part A: all answers present --
 PASS — ANSWER_1 answered.
-...
+PASS — ANSWER_2 answered.
+PASS — ANSWER_3 answered.
+PASS — ANSWER_3_WHY answered.
+PASS — ANSWER_4_ORDER answered.
+PASS — ANSWER_5 answered.
+PASS — ANSWER_6 answered.
 PASS — ANSWER_7_BRIDGE answered.
 
 -- Part B: objective answers are correct --
-PASS — ANSWER_3 is [correct].
+PASS — ANSWER_3 is correct.
 PASS — ANSWER_4_ORDER is correct.
 PASS — ANSWER_5 names a concrete risk of chmod 777.
 
@@ -36,5 +41,5 @@ answers are placeholder text for formatting purposes — paste your own real
 
 ## Checklist
 
-- [x] All group members (if applicable) worked on this submission.
-- [x] This only adds files inside our own folder under `submissions/`.
+- [X] All group members (if applicable) worked on this submission.
+- [X] This only adds files inside our own folder under `submissions/`.
